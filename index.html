@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript CRUD Part-2</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        /*we can write css code here*/
+    </style>
+    <script>
+        /*we can write js code before closing of closing of head tag*/
+    </script>
+</head>
+
+<body>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Student's Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="myul">
+                        <li>A</li>
+                        <li>B</li>
+                        <li>C</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="">
+        <input name="name" type="text" placeholder="Enter your name">
+        <input name="surname" type="text" placeholder="Enter your Surname">
+        <input name="address" type="text" placeholder="Enter your address">
+        <input type="button" value="Save" onclick="display()">
+    </form>
+    <hr>
+    <table border="1px" id="myTable" class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script>
+        /*we can write js code before closing of closing of body tag*/
+        // There are two way to define a function-
+        //1. old way-
+
+        // function display() {
+        //     //Block of code
+        //     alert("Hello function definition");
+        // }
+
+        //2. New way-introduced in (ES6-2015) version.
+        //this is global variable
+        let nm = document.querySelector('input[name = "name"]');
+        let sn = document.querySelector('input[name = "surname"]');
+        let addr = document.querySelector('input[name = "address"]');
+        let tbdy = document.querySelector('table#myTable tbody');
+
+        let display = () => {
+            //alert("Hello new function definition");
+            console.log(nm.value);
+            console.log(sn.value);
+            console.log(addr.value);
+            console.log(tbdy);
+            tbdy.innerHTML += `<tr>
+                                    <td>${nm.value}</td>
+                                    <td>${sn.value}</td>
+                                    <td>${addr.value}</td>
+                                    <td>
+                                        <button class="btn btn-primary"         data-bs-toggle="modal" data-bs-target="#exampleModal" onclick = "setData(this)">View</button>
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick = "editRecord(this)">Edit</button>
+                                        <button onclick = "deleteElement(this)" class="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>`
+            nm.value = sn.value = addr.value = '';
+        }
+        let deleteElement = (d) => {
+            //alert("Hello");
+            //console.log(d);
+            var x = confirm("Do you really want to remove data");
+            d.closest('tr').remove();
+        }
+        let mb = document.querySelector('div.modal-body');
+        let setData = (elem) => {
+            //alert("Hi");
+            let name = elem.closest('tr').querySelector('td:first-child').innerHTML;
+            let surname = elem.closest('tr').querySelector('td:nth-child(2)').innerHTML;
+            let address = elem.closest('tr').querySelector('td:nth-child(3)').innerHTML;
+            console.log(name);
+            console.log(surname);
+            document.querySelector('div.modal-body ul.myul>li:first-child').innerHTML = name;
+            document.querySelector('div.modal-body ul.myul>li:nth-child(2)').innerHTML = surname;
+            document.querySelector('div.modal-body ul.myul>li:nth-child(3)').innerHTML = address;
+
+        }
+        let editRecord = (elem) => {
+            //alert("Hi");
+            mb.innerHTML = `
+            <form action="">
+                <input name="name" type="text" placeholder="Enter your name">
+                <input name="surname" type="text" placeholder="Enter your Surname">
+                <input name="address" type="text" placeholder="Enter your address">
+                <input type="button" value="Update" onclick="display()">
+            </form>`;
+        }
+
+    </script>
+
+</body>
+
+</html>
